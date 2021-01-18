@@ -5,14 +5,20 @@ numbers.  If such an arrangement is not possible, it must
 rearrange it as the lowest possible order.
 """
 
-def nextPermutation(nums: list[int]) -> None:
-    # Do not return anything, modify nums in place
+def permute(nums: list[int]) -> None:
     m = len(nums)
+    output = []
 
-    for i in range(m-1):
-        print(nums)
-        for j in range(1, m):
-            nums[i], nums[j] = nums[j], nums[i]
-            nums[i], nums[j] = nums[j], nums[i]
+    def backtrack(first = 0):
+        if first == m:
+            output.append(nums[:])
+        for i in range(first, m):
+            nums[first], nums[i] = nums[i], nums[first]
+            backtrack(first + 1)
+            nums[first], nums[i] = nums[i], nums[first]
 
-print(nextPermutation([1, 2, 3]))
+    backtrack()
+
+    return output
+
+print(permute([1, 2, 3]))
